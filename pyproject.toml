@@ -1,0 +1,92 @@
+[project]
+name = "identity-service"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+# ==== black ====
+[tool.black]
+line-length = 120
+target-version = ['py312']
+
+# ==== isort ====
+[tool.isort]
+profile = "black"
+line_length = 120
+known_first_party = [
+    "app"
+]
+multi_line_output = 3
+include_trailing_comma = true
+skip = [".envs/"]
+
+# ==== mypy ====
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+python_version = "3.12"
+exclude = '''
+(?x)
+  .*/)scripts/ |
+  (^|/)tests/ |
+  (^|/)shared/db/session\.py |
+  (^|/)shared/db/base\.py |
+  (^|/)main\.py |
+  (^|/)manage\.py
+'''
+# Reglas estrictas
+strict = true
+
+# No se permiten funciones sin tipo
+disallow_untyped_defs = true
+
+# No se permiten parámetros sin tipo
+disallow_incomplete_defs = true
+
+# Prohibir llamadas a funciones sin tipado
+disallow_untyped_calls = true
+
+# Advertencia si usas Any
+warn_return_any = true
+
+# Revisión de funciones sin anotaciones aunque strict esté desactivado
+check_untyped_defs = true
+
+# No asumir Optional implícito
+no_implicit_optional = true
+
+# Te avisa si pones un # type: ignore innecesario
+warn_unused_ignores = true
+
+# Recomendado si usas librerías externas con pocos tipos
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py311"
+
+exclude = [
+  "tests",
+  "scripts",
+  "app/shared/db/base.py",
+  "/alembic",
+]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  # Módulos enteros
+  "ANN",  # flake8-annotations
+  "COM",  # flake8-commas
+  "C90",  # mccabe complexity
+  "DJ",   # django
+  "EXE",  # flake8-executable
+  "T10",  # debugger
+
+  # Reglas específicas
+  "D100",    # missing docstring in public module
+  "E402",    # false positives for local imports
+  "TRY003",  # verbose exception messages
+  "TD002",
+  "TD003",
+  "FIX002",
+]

@@ -1,0 +1,58 @@
+exclude: "^docs/|^tests/|.*scripts/*|app/shared/db/base.py|/tests/|^alembic/"
+default_stages: [pre-commit]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.12
+    hooks:
+      - id: ruff
+        args: ["--config=pyproject.toml"]
+
+  - repo: https://github.com/psf/black
+    rev: 23.9.1
+    hooks:
+      - id: black
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: v3.3.7
+    hooks:
+      - id: pylint
+        name: pylint
+        language: python
+        types: [python]
+        args: ["-rn", "--rcfile=.pylintrc"]
+        additional_dependencies:
+          - fastapi
+          - pydantic
+          - sqlalchemy
+          - requests
+          - pydantic-settings
+          - alembic
+          - httpx
+          - PyJWT
+          - num2words
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - sqlalchemy==2.0.40
+          - types-requests
+          - pydantic
+          - pydantic-settings
+          - fastapi
+        args: [--config-file=pyproject.toml]

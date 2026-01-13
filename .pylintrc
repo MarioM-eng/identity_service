@@ -1,0 +1,13 @@
+[MASTER]
+ignore=scripts/,venv/,app/shared/db/base.py
+
+ignore-paths=
+    ^.*/scripts/.*$
+    ^.*/venv/.*$
+    ^app/shared/db/base\.py$
+
+[MESSAGES CONTROL]
+disable=C0114, too-few-public-methods
+
+[FORMAT]
+max-line-length=120
