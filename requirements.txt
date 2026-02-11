@@ -4,3 +4,4 @@ SQLAlchemy==2.0.45
 alembic==1.18.0
 pymysql==1.1.2
 pre-commit==4.5.1
+sqlalchemy-easy-softdelete==0.8.3
