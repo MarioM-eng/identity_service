@@ -43,6 +43,7 @@ repos:
           - alembic
           - httpx
           - PyJWT
+          - bcrypt
           - num2words
 
   - repo: https://github.com/pre-commit/mirrors-mypy
