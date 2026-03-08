@@ -1,5 +1,6 @@
 """Base model for SQLAlchemy ORM."""
 
+import uuid as uuid_pkg
 from datetime import datetime
 
 from sqlalchemy import Column, ForeignKey, Table
@@ -14,7 +15,7 @@ SOFT_DELETE_MIXIN_CLASS: type = generate_soft_delete_mixin_class()
 class UUIDModel:
     """Base UUID class for SQLAlchemy models."""
 
-    uuid: Mapped[Uuid[str]] = mapped_column(Uuid(as_uuid=True), default=func.uuid())
+    uuid: Mapped[uuid_pkg.UUID] = mapped_column(Uuid(as_uuid=True), default=uuid_pkg.uuid4)
 
 
 class Base(DeclarativeBase, UUIDModel):
@@ -24,8 +25,12 @@ class Base(DeclarativeBase, UUIDModel):
 class AuditableModel:
     """Base Auditable class for SQLAlchemy models."""
 
-    created_at: Mapped[datetime] = mapped_column(default=func.now, comment="Fecha de creación")
-    updated_at: Mapped[datetime] = mapped_column(onupdate=func.now, comment="Fecha de actualización")
+    created_at: Mapped[datetime] = mapped_column(
+        default=func.now(), comment="Fecha de creación"  # pylint: disable=not-callable
+    )
+    updated_at: Mapped[datetime | None] = mapped_column(
+        onupdate=func.now(), comment="Fecha de actualización"  # pylint: disable=not-callable
+    )
     created_by: Mapped[int | None] = mapped_column(comment="ID del usuario que creó el registro")
     updated_by: Mapped[int | None] = mapped_column(comment="ID del usuario que actualizó el registro")
 

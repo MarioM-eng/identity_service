@@ -7,7 +7,7 @@ ignore-paths=
     ^app/shared/db/base\.py$
 
 [MESSAGES CONTROL]
-disable=C0114, too-few-public-methods
+disable=C0114, too-few-public-methods, duplicate-code
 
 [FORMAT]
 max-line-length=120

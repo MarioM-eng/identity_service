@@ -3,11 +3,12 @@ from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, FastAPI
 
+from app.api.v1.user_routes import user_router
 from app.config.settings import BaseAppSettings, get_config
 
 test_route = APIRouter(prefix="/test", tags=["test"])
 
-routes = [test_route]
+routes = [test_route, user_router]
 
 
 @asynccontextmanager
